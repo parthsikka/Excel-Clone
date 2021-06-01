@@ -1,0 +1,90 @@
+* {
+    box-sizing: border-box;
+    margin: 0px;
+    padding: 0px;
+}
+
+.menu {
+    background: aliceblue;
+    height: 25px;
+}
+
+.menu-options {
+    background: antiquewhite;
+    height: 25px;
+}
+
+.calculation {
+    background: aqua;
+    height: 25px;
+}
+
+.cells-content {
+    background: cadetblue;
+    height: calc(100vh - 100px);
+    overflow: auto;
+    position: relative;
+}
+
+.sheets {
+    background: chartreuse;
+    height: 25px;
+}
+
+.cell {
+    background: white;
+    min-height: 28px;
+    min-width: 84px;
+    border: 0.5px solid black;
+    max-width: 84px;
+}
+
+.row {
+    display: flex;
+}
+
+.top-left-cell {
+    height: 28px;
+    width: 26px;
+    background: lightgray;
+    position: absolute;
+    z-index: 3;
+}
+
+.top-row {
+    display: flex;
+    background: white;
+    position: absolute;
+    left: 26px;
+    top: 0px;
+    z-index: 2;
+}
+
+.top-row-cell {
+    border: 0.5px solid black;
+    min-height: 28px;
+    min-width: 84px;
+    text-align: center;
+}
+
+.left-col {
+    height: calc(2800px);
+    width: 26px;
+    text-align: center;
+    background: white;
+    position: absolute;
+    top: 28px;
+    z-index: 2;
+}
+
+.left-col-cell {
+    height: 28px;
+    width: 26px;
+    border: 0.5px solid black;
+}
+
+.cells {
+    position: absolute;
+    left: 26px;
+    top: 28px;
+}

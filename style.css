@@ -15,8 +15,10 @@
 }
 
 .calculation {
-    background: aqua;
+    /* background: aqua; */
     height: 25px;
+    display: flex;
+    background: lightgray;
 }
 
 .cells-content {
@@ -37,6 +39,7 @@
     min-width: 84px;
     border: 0.5px solid black;
     max-width: 84px;
+    outline: none;
 }
 
 .row {
@@ -87,4 +90,19 @@
     position: absolute;
     left: 26px;
     top: 28px;
+    outline: none;
+}
+
+#address {
+    height: 100%;
+    width: 8%;
+    text-align:center;
+    font-size:x-large-large
+}
+
+#formula {
+    height: 100%;
+    width: 100%;
+    outline: none;
+    padding: 2px;
 }

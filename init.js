@@ -21,10 +21,10 @@ body+= `</div>` ;
 
 
 body+= `<div class = "cells">` ;
-for(let a=1 ; a<101 ; a++){
+for(let a=0 ; a<100 ; a++){
     body+= `<div class="row">`;
     for(let b=0 ; b<26 ; b++){
-        body+= `<div contentEditable="true" rowid="${a}" colid="${b}"class="cell"></div>` ;
+        body+= `<div contentEditable="true" rowid="${a}" colid="${b}" class="cell"></div>` ;
     }
     body+= `</div>` ;
 }
@@ -41,9 +41,11 @@ for(let i=0 ; i<100 ; i++){
     for(let j=0 ; j<26 ; j++){
         let address = String.fromCharCode(65 + j) + (i+1) +"" ;
         let cellObject ={
-            address : address, 
+            name : address, 
             value : "" ,
             formula : "" ,
+            childrens : [],
+            parents: [],
         }
         row.push(cellObject) ;
     }

@@ -16,9 +16,14 @@ cellsContent.addEventListener("scroll", function(e){
 let colId;
 let rowId ;
 cellsContent.addEventListener("click", function(e){
+    document.querySelector("#formula").value = "" ;
+
     rowId = Number(e.target.getAttribute("rowid")) ; 
     colId = Number(e.target.getAttribute("colid")) ; 
-    let address = String.fromCharCode(65 + colId) + rowId +"" ;
+    if(db[rowId][colId].formula){
+        document.querySelector("#formula").value = db[rowId][colId].formula ;
+    }
+    let address = String.fromCharCode(65 + colId) + (rowId+1) +"" ;
     add.value = address ;
    // console.log(e.target);
 })
@@ -29,18 +34,35 @@ for(let a=0 ; a<eachCell.length ; a++){
     eachCell[a].addEventListener("focusout", function(e){
         let currentElement = e.target ; 
        // console.log(currentElement); 
-        let cellObject = db[rowId-1][colId] ;
-        cellObject.value = currentElement.outerText ;
+        let cellObject = db[rowId][colId] ;
+        let value = currentElement.outerText ;
         lastSelectedCell = currentElement ;
+        // update dependency : 
+        if(cellObject.value != value){
+            // remove formula :
+            if(cellObject.formula){
+                removeFormula(cellObject) ;
+            }
+            cellObject.value = value ;
+            updateChildrens(cellObject) ;
+        }
     })
 }
 
 // formulabox pe kaam :
 formulaBox.addEventListener("focusout", function(e){
+    
     let formulaIn = e.target.value ;
-    let ans = calculate(formulaIn) ; 
-    let cellObject = db[rowId-1][colId] ;
+    let cellObject = db[rowId][colId] ;
+
+    // if there's an already existing formula :
+    if(cellObject.formula){ 
+        removeFormula(cellObject) ;
+    }
+    let ans = calculate(formulaIn, cellObject) ; 
     cellObject.value = ans ;
-   lastSelectedCell.textContent = ans ;
+    lastSelectedCell.textContent = cellObject.value ;
     cellObject.formula = formulaIn ;   
 })
+
+

@@ -1,56 +1,60 @@
-let cells = document.querySelector(".cells-content") ;
-// initialize the cells and then append it in the body :
-(function(){
-let body = "" ;
-
-// top left cell : 
-body+= `<div class = "top-left-cell"></div>` ;
-
-// top row : 
-body+= `<div class = "top-row">`;
-for(let i=0 ; i<26 ; i++){
-    body+= `<div class = "top-row-cell">${String.fromCharCode(65+i)}</div>` ;
-}
-body+= `</div>` ;
-// left col : 
-body+= `<div class = "left-col">`;
-for(let i=1 ; i<101 ; i++){
-    body+= `<div class = "left-col-cell">${i}</div>` ;
-}
-body+= `</div>` ;
-
-
-body+= `<div class = "cells">` ;
-for(let a=0 ; a<100 ; a++){
-    body+= `<div class="row">`;
-    for(let b=0 ; b<26 ; b++){
-        body+= `<div contentEditable="true" rowid="${a}" colid="${b}" class="cell"></div>` ;
+let cellsContentDiv = document.querySelector(".cells-content");
+function initCells(){
+    let cellsContent = "<div class='top-left-cell'></div>";
+    cellsContent += "<div class='top-row'>"
+    for(let i=0 ; i<26 ; i++){
+        cellsContent += `<div class='top-row-cell' trid="${i}">${String.fromCharCode(65+i)}</div>`
     }
-    body+= `</div>` ;
-}
-body+= `</div>` ;
+    cellsContent += "</div>"
 
-cells.innerHTML += body ; 
-})() ;
-
-// Initialising the DataBase : 
-let db = [] ;
-(function(){
-for(let i=0 ; i<100 ; i++){
-    let row = [] ;
-    for(let j=0 ; j<26 ; j++){
-        let address = String.fromCharCode(65 + j) + (i+1) +"" ;
-        let cellObject ={
-            name : address, 
-            value : "" ,
-            formula : "" ,
-            childrens : [],
-            parents: [],
+    cellsContent += "<div class='left-col'>"
+    for(let i=0 ; i<100 ; i++){
+        cellsContent += `<div class="left-col-cell" lcid="${i}">${i+1}</div>`
+    }
+    cellsContent += "</div>"
+    cellsContent += "<div class='cells'>"
+    for(let i=0 ; i<100 ; i++){
+        cellsContent += "<div class='row'>"
+        for(let j=0 ; j<26 ; j++){
+            cellsContent += `<div class='cell' rowid='${i}' colid='${j}' contentEditable='true'></div>`
         }
-        row.push(cellObject) ;
+        cellsContent += "</div>"
     }
-    db.push(row) ;
+    cellsContent += "</div>"
+    cellsContentDiv.innerHTML = cellsContent;    
 }
-})();
+initCells();
 
-//console.log(db);
+
+let sheetsDB = [];
+
+let db; // active-sheet db
+let visitedCells; // active sheet ke visited cells
+
+function initDB(){
+    let newSheetDB = [];
+    for(let i=0 ; i<100 ; i++){
+        let row = [];
+        for(let j=0 ; j<26 ; j++){
+            //i j
+            let name = String.fromCharCode(j+65)+(i+1)+"";
+            let cellObject = {
+                name:name,
+                value:"",
+                formula:"",
+                childrens:[],
+                parents:[],
+                visited:false,
+                fontStyle : {bold:false , italic:false , underline:false } ,
+                textAlign : "left"
+            }
+            row.push(cellObject);
+        }
+        newSheetDB.push(row);
+    }
+    visitedCells = [];
+    db = newSheetDB;
+    sheetsDB.push({db:newSheetDB ,visitedCells:visitedCells});
+    console.log(sheetsDB);
+}
+initDB();
